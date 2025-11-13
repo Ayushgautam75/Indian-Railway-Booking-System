@@ -1,0 +1,42 @@
+{
+    "5588388725337": {
+        "PNR": "5588388725337",
+        "User": "ayushbro779@gmail.com",
+        "Name": "ayush gautam",
+        "From": "delhi ",
+        "To": "mumbai",
+        "Mobile": "07505407797",
+        "Age": 25,
+        "Nationality": "Indian",
+        "Address": "cscas",
+        "Journey Date": "13-11-2025",
+        "Train": "Express A",
+        "Train No": "T101",
+        "Class": "SL",
+        "Fare": 600,
+        "Departure": "09:00",
+        "Arrival": "18:00",
+        "Booking Time": "12-11-2025 22:07",
+        "Status": "CONFIRMED"
+    },
+    "3124076758115": {
+        "PNR": "3124076758115",
+        "User": "ayushbro779@gmail.com",
+        "Name": "ayush gautam",
+        "From": "delhi ",
+        "To": "mumbai",
+        "Mobile": "07505407797",
+        "Age": 25,
+        "Nationality": "Indian",
+        "Address": "rampur ",
+        "Journey Date": "15-11-2025",
+        "Train": "Kanpur Intercity",
+        "Train No": "UP105",
+        "Class": "SL",
+        "Fare": 600,
+        "Departure": "05:00",
+        "Arrival": "11:00",
+        "Booking Time": "13-11-2025 21:01",
+        "Status": "CONFIRMED"
+    }
+}
