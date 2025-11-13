@@ -1,0 +1,98 @@
+{% extends "base.html" %} {% block title %}Book Ticket | Indian Railway
+Booking{% endblock %} {% block content %}
+<section class="form-section">
+  <h1>Book Your Train Ticket</h1>
+  <p class="section-lead">
+    Fill in passenger details, select your train, and confirm the journey.
+  </p>
+
+  <form method="post" class="card form-card">
+    <h2>Passenger Information</h2>
+    <div class="grid two-column">
+      <div>
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div>
+        <label for="age">Age</label>
+        <input type="number" id="age" name="age" min="1" max="120" required />
+      </div>
+      <div>
+        <label for="mobile">Mobile Number</label>
+        <input
+          type="tel"
+          id="mobile"
+          name="mobile"
+          placeholder="10-digit mobile number"
+          pattern="[0-9]{10}"
+          required
+        />
+      </div>
+      <div>
+        <label for="nationality">Nationality</label>
+        <input
+          type="text"
+          id="nationality"
+          name="nationality"
+          value="Indian"
+          required
+        />
+      </div>
+    </div>
+
+    <label for="address">Address</label>
+    <textarea
+      id="address"
+      name="address"
+      rows="3"
+      placeholder="Street, City, State"
+      required
+    ></textarea>
+
+    <h2>Journey Details</h2>
+    <div class="grid two-column">
+      <div>
+        <label for="from_station">From Station</label>
+        <input type="text" id="from_station" name="from_station" required />
+      </div>
+      <div>
+        <label for="to_station">To Station</label>
+        <input type="text" id="to_station" name="to_station" required />
+      </div>
+      <div>
+        <label for="journey_date">Journey Date</label>
+        <input type="date" id="journey_date" name="journey_date" required />
+      </div>
+    </div>
+
+    <h2>Train Selection</h2>
+    <div class="grid two-column">
+      <div>
+        <label for="train_no">Select Train</label>
+        <select id="train_no" name="train_no" required>
+          <option value="" disabled selected>Select a train</option>
+          {% for train in trains %}
+          <option value="{{ train.train_no }}">
+            {{ train.name }} ({{ train.train_no }}) | {{ train.from }} → {{
+            train.to }} | Dep {{ train.departure }} | Arr {{ train.arrival }}
+          </option>
+          {% endfor %}
+        </select>
+      </div>
+      <div>
+        <label for="travel_class">Choose Class</label>
+        <select id="travel_class" name="travel_class" required>
+          <option value="" disabled selected>Select class</option>
+          <option value="SL">Sleeper (SL) - ₹{{ 600 }}</option>
+          <option value="3A">AC 3 Tier (3A) - ₹{{ 1000 }}</option>
+          <option value="2A">AC 2 Tier (2A) - ₹{{ 1500 }}</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary full-width">
+      Book Ticket
+    </button>
+  </form>
+</section>
+{% endblock %}

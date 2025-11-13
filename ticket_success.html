@@ -1,0 +1,60 @@
+{% extends "base.html" %} {% block title %}Ticket Confirmed | Indian Railway
+Booking{% endblock %} {% block content %}
+<section class="ticket-section">
+  <div class="card ticket-card">
+    <div class="ticket-header">
+      <h1>Indian Railways E-Ticket</h1>
+      <span class="badge">PNR: {{ ticket.PNR }}</span>
+    </div>
+
+    <div class="ticket-grid">
+      <div class="ticket-column">
+        <h2>Passenger Details</h2>
+        <p><strong>Name:</strong> {{ ticket.Name }}</p>
+        <p><strong>Age:</strong> {{ ticket.Age }}</p>
+        <p><strong>Mobile:</strong> {{ ticket.Mobile }}</p>
+        <p><strong>Nationality:</strong> {{ ticket.Nationality }}</p>
+        <p><strong>Address:</strong> {{ ticket.Address }}</p>
+
+        <h2>Journey</h2>
+        <p><strong>From:</strong> {{ ticket.From }}</p>
+        <p><strong>To:</strong> {{ ticket.To }}</p>
+        <p><strong>Journey Date:</strong> {{ ticket["Journey Date"] }}</p>
+        <p><strong>Departure:</strong> {{ ticket.Departure }}</p>
+        <p><strong>Arrival:</strong> {{ ticket.Arrival }}</p>
+      </div>
+      <div class="ticket-column">
+        <h2>Train</h2>
+        <p><strong>Train:</strong> {{ ticket.Train }}</p>
+        <p><strong>Train Number:</strong> {{ ticket["Train No"] }}</p>
+        <p><strong>Class:</strong> {{ ticket.Class }}</p>
+
+        <h2>Payment</h2>
+        <p><strong>Total Fare:</strong> ₹{{ ticket.Fare }}</p>
+        <p>
+          <strong>Status:</strong>
+          <span class="status status-confirmed">{{ ticket.Status }}</span>
+        </p>
+        <p><strong>Booking Time:</strong> {{ ticket["Booking Time"] }}</p>
+
+        <div class="qr-block">
+          <h2>QR Code</h2>
+          <img
+            src="data:image/png;base64,{{ qr_image }}"
+            alt="Ticket QR Code"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket-actions">
+      <a class="btn btn-secondary" href="{{ url_for('view_bookings') }}"
+        >View My Bookings</a
+      >
+      <a class="btn btn-outline" href="{{ url_for('book_ticket') }}"
+        >Book Another Ticket</a
+      >
+    </div>
+  </div>
+</section>
+{% endblock %}

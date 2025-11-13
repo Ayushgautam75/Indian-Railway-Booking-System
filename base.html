@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Indian Railway Booking{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__overlay"></div>
+      <div class="container header-container">
+        <div class="branding">
+          <a
+            href="{{ url_for('dashboard') if logged_in else url_for('home') }}"
+            class="logo"
+            >Indian Railways</a
+          >
+          <p class="tagline">Trusted journeys across Bharat since 1853</p>
+        </div>
+        <nav class="site-nav">
+          <ul>
+            {% if logged_in %}
+            <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('book_ticket') }}">Book Ticket</a></li>
+            <li><a href="{{ url_for('view_bookings') }}">My Bookings</a></li>
+            <li><a href="{{ url_for('track_pnr') }}">Track PNR</a></li>
+            <li>
+              <a href="{{ url_for('logout') }}" class="logout-link">Logout</a>
+            </li>
+            {% else %}
+            <li><a href="{{ url_for('login') }}">Login</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            <li><a href="{{ url_for('track_pnr') }}">Track PNR</a></li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+      <section class="hero-banner">
+        <div class="container hero-content">
+          <div>
+            <h1>Experience the Heritage of Indian Railways</h1>
+            <p>
+              Plan, book, and manage your journeys with a platform inspired by
+              the charm of India's iconic rail network.
+            </p>
+          </div>
+          <div class="hero-badge">
+            <span class="hero-badge__label">Serving</span>
+            <span class="hero-badge__value">24+ Zones</span>
+            <small>From Kashmir to Kanyakumari</small>
+          </div>
+        </div>
+      </section>
+    </header>
+
+    <main class="main-content">
+      <div class="container">
+        {% with messages = get_flashed_messages(with_categories=True) %} {% if
+        messages %}
+        <div class="flash-container">
+          {% for category, message in messages %}
+          <div class="flash flash-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %} {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <small
+          >&copy; {{ datetime.datetime.utcnow().year }} Indian Railways Booking
+          System</small
+        >
+      </div>
+    </footer>
+  </body>
+</html>

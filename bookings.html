@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block title %}My Bookings | Indian Railway
+Booking{% endblock %} {% block content %}
+<section class="bookings-section">
+  <div class="section-header">
+    <h1>My Bookings</h1>
+    {% if tickets %}
+    <form
+      action="{{ url_for('clear_bookings') }}"
+      method="post"
+      onsubmit="return confirm('Delete all bookings? This action cannot be undone.');"
+    >
+      <button type="submit" class="btn btn-outline">Clear All</button>
+    </form>
+    {% endif %}
+  </div>
+
+  {% if tickets %}
+  <div class="ticket-list">
+    {% for ticket in tickets %}
+    <article class="card ticket-card">
+      <header class="ticket-header">
+        <div>
+          <h2>{{ ticket.Train }} ({{ ticket["Train No"] }})</h2>
+          <p>{{ ticket.From }} → {{ ticket.To }}</p>
+        </div>
+        <div class="ticket-meta">
+          <span class="badge">PNR: {{ ticket.PNR }}</span>
+          <span class="status status-{{ ticket.Status|lower }}"
+            >{{ ticket.Status }}</span
+          >
+        </div>
+      </header>
+
+      <div class="ticket-body grid two-column">
+        <div>
+          <p><strong>Journey Date:</strong> {{ ticket["Journey Date"] }}</p>
+          <p><strong>Departure:</strong> {{ ticket.Departure }}</p>
+          <p><strong>Arrival:</strong> {{ ticket.Arrival }}</p>
+          <p><strong>Class:</strong> {{ ticket.Class }}</p>
+          <p><strong>Fare:</strong> ₹{{ ticket.Fare }}</p>
+        </div>
+        <div>
+          <p>
+            <strong>Passenger:</strong> {{ ticket.Name }} ({{ ticket.Age }})
+          </p>
+          <p><strong>Mobile:</strong> {{ ticket.Mobile }}</p>
+          <p><strong>Nationality:</strong> {{ ticket.Nationality }}</p>
+          <p><strong>Address:</strong> {{ ticket.Address }}</p>
+          <p><strong>Booked on:</strong> {{ ticket["Booking Time"] }}</p>
+        </div>
+      </div>
+
+      <footer class="ticket-actions">
+        <a
+          class="btn btn-secondary"
+          href="{{ url_for('edit_booking', pnr=ticket.PNR) }}"
+          >Edit</a
+        >
+        {% if ticket.Status == "CONFIRMED" %}
+        <form
+          action="{{ url_for('cancel_booking', pnr=ticket.PNR) }}"
+          method="post"
+          onsubmit="return confirm('Cancel this ticket? You will receive an 80% refund.');"
+        >
+          <button type="submit" class="btn btn-danger">Cancel</button>
+        </form>
+        {% endif %}
+      </footer>
+    </article>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-state">
+    No bookings found. Start by
+    <a href="{{ url_for('book_ticket') }}">booking your first ticket</a>.
+  </p>
+  {% endif %}
+</section>
+{% endblock %}

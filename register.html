@@ -1,0 +1,92 @@
+{% extends "base.html" %} {% block title %}Register | Indian Railway Booking{%
+endblock %} {% block content %}
+<section class="auth-hero">
+  <div class="auth-wrapper">
+    <div class="auth-illustration">
+      <span class="auth-badge">Create your travel hub</span>
+      <h1>Book smarter with a personalised railway cockpit</h1>
+      <p>
+        Manage passengers, track refunds, and save favourite routes in one
+        secure account.
+      </p>
+      <ul class="auth-highlights">
+        <li>📅 60-day advanced booking window alerts</li>
+        <li>📧 OTP-secured account setup in seconds</li>
+        <li>🧾 QR e-tickets &amp; cancellation refunds online</li>
+      </ul>
+    </div>
+
+    <div class="auth-card">
+      <h2>Set up your free account</h2>
+      <p class="auth-subtitle">
+        Verify your email to receive instant booking access.
+      </p>
+      <form method="post" class="form-card">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="name@example.com"
+          required
+          value="{{ form_data.email | default('') }}"
+        />
+
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="Choose a password"
+          required
+          minlength="6"
+        />
+
+        <label for="confirm_password">Confirm Password</label>
+        <input
+          type="password"
+          id="confirm_password"
+          name="confirm_password"
+          placeholder="Repeat your password"
+          required
+          minlength="6"
+        />
+
+        <label for="otp">OTP</label>
+        <input
+          type="text"
+          id="otp"
+          name="otp"
+          placeholder="Enter 6-digit OTP"
+          pattern="[0-9]{6}"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+        />
+
+        <div class="button-row">
+          <button
+            type="submit"
+            name="send_otp"
+            value="1"
+            class="btn btn-secondary"
+          >
+            Send OTP
+          </button>
+          <button
+            type="submit"
+            name="register"
+            value="1"
+            class="btn btn-primary"
+          >
+            Register
+          </button>
+        </div>
+      </form>
+      <p class="form-footer">
+        Already have an account?
+        <a href="{{ url_for('login') }}">Log in</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

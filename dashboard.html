@@ -1,0 +1,168 @@
+{% extends "base.html" %} {% block title %}Dashboard | Indian Railway Booking{%
+endblock %} {% block content %}
+<section class="dashboard">
+  <div class="dashboard-header">
+    <h1>Welcome{% if current_user %}, {{ current_user }}{% endif %}!</h1>
+    <p class="section-lead">
+      Book new tickets, track existing journeys, and manage your bookings.
+    </p>
+    <div class="dashboard-actions">
+      <a class="btn btn-primary" href="{{ url_for('book_ticket') }}"
+        >Book a Ticket</a
+      >
+      <a class="btn btn-secondary" href="{{ url_for('view_bookings') }}"
+        >View My Bookings</a
+      >
+      <a class="btn btn-outline" href="{{ url_for('track_pnr') }}">Track PNR</a>
+    </div>
+  </div>
+
+  <div class="grid two-column">
+    <div class="card">
+      <h2>Upcoming Trains</h2>
+      <p class="card-lead">
+        Browse available trains and live seat availability.
+      </p>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Train</th>
+              <th>Route</th>
+              <th>Departure</th>
+              <th>Arrival</th>
+              <th>Seats (SL / 3A / 2A)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for train in trains %}
+            <tr>
+              <td>{{ train.name }} ({{ train.train_no }})</td>
+              <td>{{ train.from }} → {{ train.to }}</td>
+              <td>{{ train.departure }}</td>
+              <td>{{ train.arrival }}</td>
+              <td>
+                {{ train.seats.SL }} / {{ train.seats["3A"] }} / {{
+                train.seats["2A"] }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Recent Bookings</h2>
+      {% if bookings %}
+      <ul class="booking-list">
+        {% for ticket in bookings[:5] %}
+        <li>
+          <div>
+            <strong>{{ ticket.Train }} ({{ ticket["Train No"] }})</strong>
+            <div>{{ ticket.From }} → {{ ticket.To }}</div>
+          </div>
+          <div class="meta">
+            <span>{{ ticket["Journey Date"] }}</span>
+            <span class="status status-{{ ticket.Status|lower }}"
+              >{{ ticket.Status }}</span
+            >
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+      {% else %}
+      <p>No bookings yet. Start by booking your first journey.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <section class="rail-highlights">
+    <div class="card feature-card">
+      <div class="feature-icon">🗺️</div>
+      <div>
+        <h3>Nationwide Network Map</h3>
+        <p>
+          Explore every major Indian Railways zone with our curated guide to
+          flagship routes, high-speed corridors, and scenic regional lines.
+        </p>
+        <a class="link-cta" href="{{ url_for('book_ticket') }}"
+          >Plan a route →</a
+        >
+      </div>
+    </div>
+
+    <div class="card feature-card">
+      <div class="feature-icon">🎟️</div>
+      <div>
+        <h3>Smart Fare Watch</h3>
+        <p>
+          Catch advance purchase alerts, peak vs. off-peak comparisons, and
+          saver recommendations before they sell out.
+        </p>
+        <a class="link-cta" href="{{ url_for('track_pnr') }}"
+          >Monitor PNR status →</a
+        >
+      </div>
+    </div>
+
+    <div class="card feature-card">
+      <div class="feature-icon">✨</div>
+      <div>
+        <h3>Seasonal Spotlight</h3>
+        <p>
+          Discover winter heritage circuits, coastal getaway specials, and
+          festival trains curated for your next itinerary.
+        </p>
+        <a class="link-cta" href="{{ url_for('view_bookings') }}"
+          >See curated trips →</a
+        >
+      </div>
+    </div>
+  </section>
+
+  <section class="travel-inspiration">
+    <header>
+      <h2>Travel Inspiration</h2>
+      <p class="section-lead">
+        Handpicked city guides to plan unforgettable journeys across India.
+      </p>
+    </header>
+    <div class="inspiration-grid">
+      <article class="inspiration-card">
+        <div class="inspiration-image inspiration-delhi"></div>
+        <div class="inspiration-content">
+          <h3>Delhi to Mumbai</h3>
+          <p>
+            Experience Rajdhani luxury, Bollywood nights, and marine drive
+            sunsets on India’s busiest corridor.
+          </p>
+          <span class="chip">Under 18 hrs</span>
+        </div>
+      </article>
+      <article class="inspiration-card">
+        <div class="inspiration-image inspiration-kolkata"></div>
+        <div class="inspiration-content">
+          <h3>Kolkata to Darjeeling</h3>
+          <p>
+            Combine colonial heritage with Himalayan panoramas aboard toy train
+            extensions and hill station stays.
+          </p>
+          <span class="chip">Scenic route</span>
+        </div>
+      </article>
+      <article class="inspiration-card">
+        <div class="inspiration-image inspiration-goa"></div>
+        <div class="inspiration-content">
+          <h3>Mumbai to Goa</h3>
+          <p>
+            Ride the Konkan coast through lush ghats, river bridges, and seaside
+            pit stops perfect for weekend escapes.
+          </p>
+          <span class="chip">Coastal escape</span>
+        </div>
+      </article>
+    </div>
+  </section>
+</section>
+{% endblock %}

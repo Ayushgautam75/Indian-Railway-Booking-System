@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block title %}Track PNR | Indian Railway Booking{%
+endblock %} {% block content %}
+<section class="form-section">
+  <h1>Track Your PNR Status</h1>
+  <p class="section-lead">
+    Enter your 13 digit PNR number to view booking details and status.
+  </p>
+
+  <form method="post" class="card form-card track-form">
+    <label for="pnr">PNR Number</label>
+    <input
+      type="text"
+      id="pnr"
+      name="pnr"
+      placeholder="Enter 13 digit PNR"
+      pattern="[0-9]{13}"
+      required
+    />
+    <button type="submit" class="btn btn-primary">Track PNR</button>
+  </form>
+
+  {% if ticket %}
+  <div class="card ticket-card">
+    <header class="ticket-header">
+      <div>
+        <h2>{{ ticket.Train }} ({{ ticket["Train No"] }})</h2>
+        <p>{{ ticket.From }} → {{ ticket.To }}</p>
+      </div>
+      <div class="ticket-meta">
+        <span class="badge">PNR: {{ ticket.PNR }}</span>
+        <span class="status status-{{ ticket.Status|lower }}"
+          >{{ ticket.Status }}</span
+        >
+      </div>
+    </header>
+    <div class="ticket-body grid two-column">
+      <div>
+        <p><strong>Journey Date:</strong> {{ ticket["Journey Date"] }}</p>
+        <p><strong>Departure:</strong> {{ ticket.Departure }}</p>
+        <p><strong>Arrival:</strong> {{ ticket.Arrival }}</p>
+        <p><strong>Class:</strong> {{ ticket.Class }}</p>
+        <p><strong>Fare:</strong> ₹{{ ticket.Fare }}</p>
+      </div>
+      <div>
+        <p><strong>Passenger:</strong> {{ ticket.Name }} ({{ ticket.Age }})</p>
+        <p><strong>Mobile:</strong> {{ ticket.Mobile }}</p>
+        <p><strong>Nationality:</strong> {{ ticket.Nationality }}</p>
+        <p><strong>Status:</strong> {{ ticket.Status }}</p>
+        {% if ticket.qr_image %}
+        <div class="qr-block">
+          <img
+            src="data:image/png;base64,{{ ticket.qr_image }}"
+            alt="PNR QR Code"
+          />
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

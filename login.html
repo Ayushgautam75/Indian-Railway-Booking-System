@@ -1,0 +1,71 @@
+{% extends "base.html" %} {% block title %}Login | Indian Railway Booking{%
+endblock %} {% block content %}
+<section class="auth-hero">
+  <div class="auth-wrapper">
+    <div class="auth-illustration">
+      <span class="auth-badge">One Login. All Journeys.</span>
+      <h1>Plan trips faster with SmartRail</h1>
+      <p>
+        Unlock live seat availability, fare alerts, and PNR tracking designed
+        for Indian Railways travellers.
+      </p>
+      <ul class="auth-highlights">
+        <li>🔔 Instant OTP login for quick access</li>
+        <li>🚄 Real-time train status &amp; QR e-tickets</li>
+        <li>💰 Smart fare watch &amp; seasonal deals</li>
+      </ul>
+    </div>
+
+    <div class="auth-card">
+      <h2>Sign in to continue</h2>
+      <p class="auth-subtitle">
+        Enter your registered email to receive a secure OTP.
+      </p>
+      <form method="post" class="form-card">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="name@example.com"
+          required
+          value="{{ form_data.email | default('') }}"
+        />
+
+        <label for="otp">OTP</label>
+        <input
+          type="text"
+          id="otp"
+          name="otp"
+          placeholder="Enter 6-digit OTP"
+          pattern="[0-9]{6}"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+        />
+
+        <div class="button-row">
+          <button
+            type="submit"
+            name="send_otp"
+            value="1"
+            class="btn btn-secondary"
+          >
+            Send OTP
+          </button>
+          <button
+            type="submit"
+            name="verify_otp"
+            value="1"
+            class="btn btn-primary"
+          >
+            Verify &amp; Login
+          </button>
+        </div>
+      </form>
+      <p class="form-footer">
+        New here? <a href="{{ url_for('register') }}">Create an account</a>
+      </p>
+    </div>
+  </div>
+</section>
+{% endblock %}

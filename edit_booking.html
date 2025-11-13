@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Edit Booking | Indian Railway Booking{% endblock %}
+{% block content %}
+<section class="form-section">
+    <h1>Edit Booking</h1>
+    <p class="section-lead">Update passenger details or change class for PNR {{ ticket.PNR }}.</p>
+
+    <form method="post" class="card form-card">
+        <div class="grid two-column">
+            <div>
+                <label for="name">Passenger Name</label>
+                <input type="text" id="name" name="name" value="{{ ticket.Name }}" required>
+            </div>
+            <div>
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" min="1" max="120" value="{{ ticket.Age }}" required>
+            </div>
+        </div>
+
+        <label for="nationality">Nationality</label>
+        <input type="text" id="nationality" name="nationality" value="{{ ticket.Nationality }}" required>
+
+        <label for="address">Address</label>
+        <textarea id="address" name="address" rows="3" required>{{ ticket.Address }}</textarea>
+
+        <div class="grid two-column">
+            <div>
+                <label for="journey_date">Journey Date</label>
+                <input type="date" id="journey_date" name="journey_date" value="{{ ticket['Journey Date']|datetimeformat('%Y-%m-%d') }}" required>
+            </div>
+            <div>
+                <label for="travel_class">Class</label>
+                <select id="travel_class" name="travel_class" required>
+                    {% for option in ['SL', '3A', '2A'] %}
+                        <option value="{{ option }}" {% if ticket.Class == option %}selected{% endif %}>
+                            {{ option }} - ₹{{ 600 if option == 'SL' else 1000 if option == '3A' else 1500 }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Update Booking</button>
+        <a class="btn btn-outline" href="{{ url_for('view_bookings') }}">Back to My Bookings</a>
+    </form>
+</section>
+{% endblock %}
+
